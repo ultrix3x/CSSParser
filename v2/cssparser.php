@@ -66,7 +66,7 @@ class CSSParser {
               $inQuote = $c;
             } elseif(($property === false) && ($c == ':')) {
               $property = trim(substr($code, 0, $idx - 1));
-              if(preg_match('/^(.*)\[([0-9])\]$/Us', $property, $propMatch)) {
+              if(preg_match('/^(.*)\[([0-9]*)\]$/Us', $property, $propMatch)) {
                 $property = $propMatch[1].'['.static::$propCounter.']';
                 static::$propCounter += 1;
               }
