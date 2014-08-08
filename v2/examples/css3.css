@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+}
+
+#bodyContainer {
+  width: 60%;
+  background: #eeeeee;
+}
+
+body {
+  margin: 20px;
+}
+
+#bodyContainer {
+  font-size: 14px;
+}
+
+#bodyContainer div {
+  font-size: 15px;
+}
+
+body {
+  padding: 0;
+}

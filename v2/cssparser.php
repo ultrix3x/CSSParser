@@ -41,6 +41,7 @@ class CSSParser {
     if(strlen($css) == 0) {
       return $index;
     }
+    $css = preg_replace('/\/\*.*\*\//Us', '', $css);
     while(preg_match('/^\s*(\@(media|import|local)([^\{\}]+)(\{)|([^\{\}]+)(\{)|([^\{\}]*)(\}))/Usi', $css, $match)) {
       if(isset($match[8]) && ($match[8] == '}')) {
         if($section !== false) {
@@ -49,6 +50,7 @@ class CSSParser {
           $inQuote = false;
           $property = false;
           $codeLen = strlen($code);
+          $parenthesis = array();
           while($idx < $codeLen) {
             $c = $code{$idx};
             $idx++;
@@ -56,6 +58,10 @@ class CSSParser {
               if($inQuote === $c) {
                 $inQuote = false;
               }
+            } elseif(($inQuote === false) && ($c == '(')) {
+              array_push($parenthesis, '(');
+            } elseif(($inQuote === false) && ($c == ')')) {
+              array_pop($parenthesis);
             } elseif(($c == '\'') || ($c == '"')) {
               $inQuote = $c;
             } elseif(($property === false) && ($c == ':')) {
@@ -66,7 +72,7 @@ class CSSParser {
               }
               $code = substr($code, $idx);
               $idx = 0;
-            } elseif($c == ';') {
+            } elseif((count($parenthesis) == 0) && ($c == ';')) {
               $value = trim(substr($code, 0, $idx - 1));
               $code = substr($code, $idx);
               $idx = 0;

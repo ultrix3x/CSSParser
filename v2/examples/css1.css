@@ -1,0 +1,10 @@
+body {
+  background: #ffffff;
+}
+
+#bodyContainer {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid red;
+  background: #cccccc;
+}
